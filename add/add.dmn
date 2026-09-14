@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="_add" name="add" namespace="https://kie.org/dmn/_add">
+  <inputData id="_input-a" name="A">
+    <variable id="_input-a-var" name="A" typeRef="number"/>
+  </inputData>
+  <inputData id="_input-b" name="B">
+    <variable id="_input-b-var" name="B" typeRef="number"/>
+  </inputData>
+  <decision id="_sum" name="Sum">
+    <variable id="_sum-var" name="Sum" typeRef="number"/>
+    <informationRequirement>
+      <requiredInput href="#_input-a"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#_input-b"/>
+    </informationRequirement>
+    <literalExpression id="_sum-expr">
+      <text>A + B</text>
+    </literalExpression>
+  </decision>
+</definitions>

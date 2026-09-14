@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Bands taken from NEA's 1-hr PM2.5 concentration table used alongside the
+  PSI Haze Lookup Table during haze episodes (see https://www.haze.gov.sg/resources/1-hr-pm2.5-readings):
+
+    1-hr PM2.5 (µg/m3)  Band
+    0   - 55             Normal
+    56  - 150            Elevated
+    151 - 250            High
+    251 and above        Very High
+-->
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="_haze-hourly" name="haze-hourly" namespace="https://kie.org/dmn/_haze-hourly">
+  <inputData id="_input-pm25" name="PM25">
+    <variable id="_input-pm25-var" name="PM25" typeRef="number"/>
+  </inputData>
+  <decision id="_haze-band" name="Haze Band">
+    <variable id="_haze-band-var" name="HazeBand" typeRef="string"/>
+    <informationRequirement>
+      <requiredInput href="#_input-pm25"/>
+    </informationRequirement>
+    <decisionTable id="_haze-band-table" hitPolicy="UNIQUE">
+      <input id="_haze-band-input1" label="1-hr PM2.5 (µg/m3)">
+        <inputExpression id="_haze-band-input1-expr" typeRef="number">
+          <text>PM25</text>
+        </inputExpression>
+      </input>
+      <output id="_haze-band-output1" label="Band" typeRef="string"/>
+      <rule id="_haze-band-rule1">
+        <inputEntry id="_haze-band-rule1-in1">
+          <text>&lt;= 55</text>
+        </inputEntry>
+        <outputEntry id="_haze-band-rule1-out1">
+          <text>"Normal → Normal activities allowed"</text>
+        </outputEntry>
+      </rule>
+      <rule id="_haze-band-rule2">
+        <inputEntry id="_haze-band-rule2-in1">
+          <text>[56..150]</text>
+        </inputEntry>
+        <outputEntry id="_haze-band-rule2-out1">
+          <text>"Elevated → Reduce strenuous outdoor activity"</text>
+        </outputEntry>
+      </rule>
+      <rule id="_haze-band-rule3">
+        <inputEntry id="_haze-band-rule3-in1">
+          <text>[151..250]</text>
+        </inputEntry>
+        <outputEntry id="_haze-band-rule3-out1">
+          <text>"High → Minimize strenuous outdoor activity"</text>
+        </outputEntry>
+      </rule>
+      <rule id="_haze-band-rule4">
+        <inputEntry id="_haze-band-rule4-in1">
+          <text>&gt;= 251</text>
+        </inputEntry>
+        <outputEntry id="_haze-band-rule4-out1">
+          <text>"Very High → Avoid all strenuous outdoor activity"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
