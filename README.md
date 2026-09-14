@@ -18,4 +18,4 @@ docker run -d -p 8080:8080 --name kogito-jit --platform linux/arm64 apache/incub
 
 ## DMN on-line editor
 To view or modify, load the `.dmn` file into `https://demo.bpmn.io/dmn`.  
-
+![dmn-screenshot](./dmn-screenshot.png) 
