@@ -26,7 +26,6 @@
 | Embeddability | Heavier runtime | Very lightweight, easy to embed (Rust core, WASM-capable) |
 | Best fit | Enterprise BPM stacks, regulated industries needing portability/audit trail | Developer-first apps wanting a fast, git-friendly, embeddable rules engine |
 
-**Choosing between them in practice:** do you need vendor-neutral portability and business-analyst-facing tooling (→ DMN), or do you want something lightweight you can version-control and embed directly in a service (→ JDM/zen-engine)?
 
 ## 2. Runtime deployment model
 
@@ -53,36 +52,7 @@
 
 **Bottom line:** DMN wins on standards-body governance and multi-vendor conformance; JDM wins on operational fit for a Go/Python, JVM-free stack, backed by a single but credible vendor.
 
-## 4. Persistence format
-
-- XML is the OMG-mandated interchange/serialization format for DMN — required for cross-vendor portability and what the TCK tests against
-- In practice, engines parse XML into their own internal runtime model; authoring tools (Camunda Modeler, Trisotech) only serialize to XML on save/export
-- Some tools offer alternate authoring representations (e.g., DMN-Scala DSL) that compile to/from standard XML
-- Known pain point: XML diffs poorly in git compared to JSON — part of JDM's appeal for dev-centric workflows
-
-## 5. Getting started with DMN + Docker + Go
-
-Two viable paths using the Drools/KIE engine (Apache-licensed, 99.91% TCK conformance):
-
-**A. Custom Quarkus/Kogito service (stable, production-shaped)**
-1. Author the `.dmn` file (DMN.new, Camunda Modeler, or VS Code DMN extension)
-2. Scaffold a Quarkus project with the `kogito-quarkus-decisions` extension
-3. Drop the `.dmn` file into `src/main/resources/` — Kogito auto-generates a matching REST endpoint
-4. Verify locally via `mvn quarkus:dev` and the auto-generated Swagger UI
-5. Build with `mvn clean package`, then `docker build -f src/main/docker/Dockerfile.jvm -t dmn-service .`
-6. Run: `docker run -p 8080:8080 dmn-service` — REST endpoint live at `http://localhost:8080/<DecisionName>`
-7. Call from Go with a plain `net/http` POST of JSON input, decode JSON output — no DMN-specific Go library needed
-8. Add as a service in `docker-compose.yml` alongside the Go app
-
-**B. Apache KIE Kogito JIT Runner (faster prototyping)**
-- Prebuilt image: `docker.io/apache/incubator-kie-kogito-jit-runner:latest`
-- Lets you submit a `.dmn` model at runtime over HTTP and evaluate it on the fly — no Maven project or custom build step
-- Good for prototyping or workflows where the DMN model changes without wanting to rebuild/redeploy
-- Trade-off: less of a stable, typed contract than a purpose-built Quarkus service; exact request/response API shape should be verified against current KIE docs before building against it
-
-**Alternative (not recommended as default for this stack):** Camunda 8 (`camunda/zeebe` image) — heavier (full workflow engine, not just decisions) and lower DMN conformance (~81–84%) than Drools/KIE.
-
 ## 6. Overall recommendation for the Go/Python stack
 
 - **If avoiding a JVM dependency is the priority:** JDM/zen-engine is the pragmatic choice — native Go and Python bindings, JSON persistence, git-friendly, SOC 2, real Fortune 100 usage, no separate service required.
-- **If vendor-neutral portability, FEEL, DRDs, or multi-vendor standards conformance are required** (e.g., regulated industry, procurement checklist): DMN via a JVM-based decision service (Drools/KIE-backed) is the stronger fit, accepting the network hop and extra infra.
+- **If vendor-neutral portability, FEEL, DRDs, or multi-vendor standards conformance are required** (e.g., **regulated industry**, procurement checklist): DMN via a JVM-based decision service (Drools/KIE-backed) is the stronger fit, accepting the network hop and extra infra.
