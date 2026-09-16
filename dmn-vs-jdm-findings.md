@@ -25,6 +25,7 @@
 | Tooling maturity | Mature, enterprise-grade (Camunda, Drools, ODM) | Newer, lighter, growing fast |
 | Embeddability | Heavier runtime | Very lightweight, easy to embed (Rust core, WASM-capable) |
 | Best fit | Enterprise BPM stacks, regulated industries needing portability/audit trail | Developer-first apps wanting a fast, git-friendly, embeddable rules engine |
+| Latency | REST APIs round-trips | In-process |
 
 
 ## 2. Runtime deployment model
