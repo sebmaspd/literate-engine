@@ -19,7 +19,7 @@
 
 | | DMN | JDM |
 |---|---|---|
-| Standardization | OMG standard, multi-vendor | Single-ecosystem (GoRules/zen-engine) |
+| Standardization | OMG standard, multi-vendor | Open source (GoRules/zen-engine) |
 | Format | XML | JSON |
 | Expression language | FEEL | Simple expression syntax (JS-like) |
 | Tooling maturity | Mature, enterprise-grade (Camunda, Drools, ODM) | Newer, lighter, growing fast |
