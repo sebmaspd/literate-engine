@@ -27,6 +27,7 @@
 | Best fit | Enterprise BPM stacks, regulated industries needing portability/audit trail | Developer-first apps wanting a fast, git-friendly, embeddable rules engine |
 | Latency | REST APIs round-trips | In-process |
 | Distributed Point of Failure | Yes | No |
+| Infra required | Yes | No |
 
 
 ## 2. Runtime deployment model
