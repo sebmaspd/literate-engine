@@ -28,6 +28,7 @@
 | Latency | REST APIs round-trips | In-process | |
 | Distributed Point of Failure | Yes | No | |
 | Additional Infra required | Yes | No | |
+| Complexity (Development, Test, Deployment, Maintain (High/Medium/Low) | | | |
 
 
 ## 2. Runtime deployment model
